@@ -1,0 +1,126 @@
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1QYA05vZzNgWLFno_7E9zEkniNS_TlbdtP1pimOtscIE/edit#gid=1775971292");
+var sheet = ss.getSheetByName('Sheet1'); // be very careful ... it is the sheet name .. so it should match 
+
+function doPost(e){
+  var wicket=e.parameter.wicket;
+  w=parseInt(wicket);
+  var wicketexcel=[[w+1]];
+sheet.getRange(16, 1,1,1).setValue(wicketexcel);
+  
+ 
+  var action=e.parameter.action;
+
+ if(action=='addtarget'){
+
+return  addtarget(e);}
+   
+
+ }
+
+function doGet(e){
+  var pl = sheet.getRange(16,1, 1,1).getValues();
+  p=parseInt(pl);
+  
+ 
+  
+  
+var action = 'getItems';
+
+  if(action == 'getItems'){
+    return getItems(e);
+
+  }
+  
+  }
+
+
+function getItems(e){
+  
+  
+var records={};
+ 
+  var rows = sheet.getRange(1,1, 10,1).getValues();
+      data = [];
+
+  for (var r = 0, l = rows.length; r < l; r++) {
+    var row     = rows[r],
+        record  = {};
+    record[''] = rows;
+    
+    
+    data.push(record);
+    
+   }
+  records.items = data;
+  var result=JSON.stringify(records);
+   return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
+
+
+
+}
+
+
+function addtarget(e)
+{
+    
+  var teamscore=e.parameter.teamscore;
+  var target=e.parameter.target;
+ 
+  var individual=e.parameter.individual;
+  var  match=e.parameter.match;
+  var m=parseInt(match);
+  
+  var teamscoreint=parseInt(teamscore);
+  var targetint=parseInt(target);
+  
+ 
+  /*var wicket=2;
+  var match=1;
+  var individual=34;
+  var teamscore=45;
+  var target=32;*/
+    var example = [[individual]];
+
+if(teamscoreint>=targetint || w==10){
+  
+
+var targetinti=[[targetint]]
+sheet.getRange(18, m+1,1,1).setValue(targetinti);
+
+var teamscoreinti=[[teamscoreint]];
+sheet.getRange(19, m+1,1,1).setValue(teamscoreinti);
+
+if(w!=10){
+  sheet.getRange(20, m+1,1,1).setValue(w);
+  sheet.getRange(w+1, m+1,1,1).setValue(example);
+var wi=[[w-1]];
+}
+else{
+var wi=[[w]];
+sheet.getRange(20, m+1,1,1).setValue(w);
+ sheet.getRange(w, m+1,1,1).setValue(example);}
+
+
+
+if(w!=10){
+  sheet.getRange(20, m+1,1,1).setValue(w);
+var no=sheet.getRange(w+1, 32,1,1).getValue();
+  var no = [[no+1]];
+sheet.getRange(w+1, 32,1,1).setValues(no);}
+}
+else{
+  sheet.getRange(w, m+1,1,1).setValue(example);
+  
+}
+
+
+
+  
+  
+   return ContentService.createTextOutput("Success").setMimeType(ContentService.MimeType.TEXT);
+
+}
+
+
+
+
